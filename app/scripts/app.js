@@ -9,7 +9,7 @@ angular.module('unbMpcaCswApp', [
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'partials/consulta',
+        templateUrl: 'partials/consultaMunicipios',
         controller: 'MainCtrl'
       })
       .otherwise({
