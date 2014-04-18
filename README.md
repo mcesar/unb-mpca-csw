@@ -5,6 +5,7 @@ Getting Started
  - Instale o Node.JS
  - Instale o Git
  - Execute `npm install -g yo`, para instalar o Yeoman
+ - Execute `npm install -g grunt` para instalar o Grunt
  - Faça um clone desse repositório
  - Execute `npm install` e depois `bower update` de dentro da pasta do projeto
  - Execute `grunt serve` para checar se está tudo funcionando
