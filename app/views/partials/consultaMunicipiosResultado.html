@@ -1,0 +1,13 @@
+<h2>Resultado de Busca por Munic&iacute;pios</h2>
+ 
+<table width="100%" class="table table-hover">
+	<thead>
+		<tr><th width="50px">UF</th><th>Munic&iacute;pio</th></tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="municipio in listaMunicipios | orderBy:'uf, nome'">
+			<td><span>{{municipio.uf}}</span></td>
+			<td><a href="/municipio/{{municipio._id}}">{{municipio.nome}}</a></td>
+		</tr>
+	</tbody>
+</table>

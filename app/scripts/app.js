@@ -12,6 +12,10 @@ angular.module('unbMpcaCswApp', [
         templateUrl: 'partials/consultaMunicipios',
         controller: 'MainCtrl'
       })
+	  .when('/consultaMunicipiosResultado', {
+        templateUrl: 'partials/consultaMunicipiosResultado',
+        controller: 'consultaMunicipiosResultadoCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
