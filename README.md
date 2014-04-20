@@ -42,4 +42,27 @@ Para executar o crawler e popular o banco
  - De dentro da pasta do projeto, execute `npm install cheerio`
  - De dentro da pasta do projeto, execute `npm install async`
  - De dentro da pasta `crawler`, execute `node buscaMunicipios.js`
+
+Para publicar no ambiente de produção
+===
+
+O passos necessários para a primeira publicação feita a partir de uma máquina de desenvolvimento são:
+
+```
+grunt build
+cd dist
+git init
+git add .
+git commit -m "deploy"
+heroku git:remote -a unb-mpca-csw
+git push heroku master
+```
+
+Daí em diante, execute
  
+```
+grunt build
+cd dist
+git commit -a -m "deploy"
+git push heroku master
+```
