@@ -46,19 +46,13 @@ Para executar o crawler e popular o banco
 Para publicar no ambiente de produção
 ===
 
-O passos necessários para a primeira publicação feita a partir de uma máquina de desenvolvimento são:
+Para clonar o repositório do heroku, execute:
 
 ```
-grunt build
-cd dist
-git init
-git add .
-git commit -m "deploy"
-heroku git:remote -a unb-mpca-csw
-git push heroku master
+heroku git:clone -a unb-mpca-csw dist
 ```
 
-Daí em diante, execute
+Para fazer um _deploy_ no _heroku_, execute
  
 ```
 grunt build
