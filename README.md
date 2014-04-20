@@ -34,3 +34,12 @@ Para testar automaticamente
 acrescente os arquivos de teste na pasta `test/client/spec` ou `test/server`, seguindo os exemplos que já estão lá, e execute `grunt test`. Se quiser rodar somente os testes de servidor, execute `grunt test:server`, só os do cliente `grunt test:client`.
 
 Ao testar a interface HTML, pode ser necessário usar o `ngMock` para simular a API REST.
+
+Para executar o crawler e popular o banco
+===
+
+ - De dentro da pasta do projeto, execute `npm install request`
+ - De dentro da pasta do projeto, execute `npm install cheerio`
+ - De dentro da pasta do projeto, execute `npm install async`
+ - De dentro da pasta `crawler`, execute `node buscaMunicipios.js`
+ 
