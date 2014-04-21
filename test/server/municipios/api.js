@@ -5,10 +5,8 @@
 
 var should = require('should'),
     app = require('../../../server'),
-    request = require('supertest'),
-	url = require('url'),
-	query = require('querystring'),
-	req = require('request');
+    request = require('supertest');
+	
 
 describe('GET /api/municipios:', function() {
 
@@ -94,7 +92,7 @@ describe('Validação de parâmetros:', function() {
     
      it('números inteiros no campo cod devem ser permitidos', function(done) {
         request(app)
-            .get('/api/municipios?cod=592')
+            .get('/api/municipios?cod=0643')
             .expect(200)
             .expect('Content-Type', /json/)
             .end(function(err, res) {
