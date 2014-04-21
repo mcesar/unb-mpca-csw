@@ -4,13 +4,13 @@
 <li><small>IDH (Índice de Desenvolvimento Humano) do ano de 2010</small></li>
 </ul>
 <p><hr></p></br></br>
-
-<form role="form" name="consultaMunicipio" action="consultaMunicipiosResultado" method="get">
-	<div class="form-group">
-		<label><h3>Busca por Munic&iacute;pios</h3></label>
-		<input type="text" class="form-control" id="buscaMunicipio" name="buscaMunicipio" placeholder="Nome do Munic&iacute;pio">
-	</div>
-	<button id="singlebutton" class="btn btn-primary btn-block">Buscar</button>
-</form>
-
-</form>
+<div ng-controller="FormCtrl">
+	<form role="form" ng-model="formMunicipio" id="idFormMunicipio" name="consultaMunicipio" method="get" action="consultaMunicipiosResultado">
+		<div class="form-group">
+			<label><h3>Busca por Munic&iacute;pios</h3></label>
+			<input type="text" class="form-control" ng-model="buscaMunicipio" name="buscaMunicipio" placeholder="Nome do Munic&iacute;pio">
+			<span  style="color:red">{{alerta}}</span>
+		</div>
+	</form>
+	<button ng-model="singlebutton" ng-click="enviar()" class="btn btn-primary btn-block">Buscar</button>	
+</div>
