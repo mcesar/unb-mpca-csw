@@ -18,6 +18,7 @@ var config = require('./lib/config/config');
 // Connect to database
 var db = mongoose.connect(config.mongo.uri, config.mongo.options);
 
+
 // Bootstrap models
 var modelsPath = path.join(__dirname, 'lib/models');
 fs.readdirSync(modelsPath).forEach(function (file) {
