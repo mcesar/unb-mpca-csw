@@ -50,13 +50,13 @@ it('não deve responder a métodos PUT', function(done){
 
 it('não deve responder a métodos DELETE', function(done){
 	request(app)
-		.delete('/api/municipios')
+		.del('/api/municipios')
 		.expect(405)
 		.end(function(err, res) {
 		    if (err) return done(err);
 		    done();
 		});
-})	
+})
 		
 });
 
