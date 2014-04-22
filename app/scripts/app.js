@@ -16,6 +16,10 @@ angular.module('unbMpcaCswApp', [
         templateUrl: 'partials/consultaMunicipiosResultado',
         controller: 'consultaMunicipiosResultadoCtrl'
       })
+	  .when('/municipio/:municipioId', {
+        templateUrl: 'partials/municipio',
+        controller: 'detalhaMunicipioCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
