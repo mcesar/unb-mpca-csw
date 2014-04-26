@@ -8,15 +8,22 @@ unbControllers.controller('MainCtrl', function ($scope, $http) {
     });
   });
 
-unbControllers.controller('FormCtrl', function ($scope, $http) {
+unbControllers.controller('FormCtrl', function ($scope, $location, $rootScope) {
     $scope.enviar = function () {
 	if($scope.buscaMunicipio === undefined || $scope.buscaMunicipio.trim() === ""){
 		$scope.alerta = "Campo Obrigatório";
-		//alert("Pesquisa inválida");
 	}else{
-		//$scope.formMunicipio.ng-submit();
-		document.getElementById("idFormMunicipio").submit();
+		$scope.alerta = "";
+		$rootScope.paramMunicipio = $scope.buscaMunicipio;
+		$location.path("consultaMunicipiosResultado");
 	}
     };
  });
 
+unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $scope, $rootScope) {
+	$http.get("http://"+window.location.host+'/api/municipios?nome='+$rootScope.paramMunicipio).success(function(data, status, header, config) {
+		$scope.listaMunicipios = data;
+	}).error(function(data, status, header, config) {
+	   	$scope.alerta = "Erro ao buscar municipio: "+status;
+	});
+ });
