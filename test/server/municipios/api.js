@@ -90,19 +90,27 @@ describe('Validação de parâmetros:', function() {
             });
     })
     
-     it('números inteiros no campo cod devem ser permitidos', function(done) {
+     it('números inteiros no campo id devem ser permitidos', function(done) {
         request(app)
-            .get('/api/municipios?cod=0643')
+            .get('/api/municipios?id=5353fd784d2bc7ed64289af7')
             .expect(200)
             .expect('Content-Type', /json/)
             .end(function(err, res) {
                 if (err) return done(err);
                 res.body.should.be.instanceof(Array);
+                //console.log(JSON.parse(res.body));
+                if(res.body[0].nome == 'RIO BRANCO' &&
+                		res.body[0].cod == '0139' &&
+                		res.body[0].uf == 'AC' &&
+                		//res.body[0]._id == '5353fd784d2bc7ed64289af7' &&
+                		//res.body[0].__v == 0)
+                	console.log('Conteúdo testado com sucesso');
                 done();
             });
+        
     })
     
-    it('letras no campo cod não serão permitidas', function(done) {
+    /*it('letras no campo cod não serão permitidas', function(done) {
         request(app)
             .get('/api/municipios?cod=28s')
             .expect(400)
@@ -110,7 +118,7 @@ describe('Validação de parâmetros:', function() {
                 if (err) return done(err);
                 done();
             });
-    })
+    })*/
     
     it('UFs legítimas serão permitidas', function(done) {
         request(app)
