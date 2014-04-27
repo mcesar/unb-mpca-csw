@@ -27,3 +27,9 @@ unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $s
 	   	$scope.alerta = "Erro ao buscar municipio: "+status;
 	});
  });
+
+ unbControllers.controller('detalhaMunicipioCtrl', function ($scope, $http, $routeParams) {
+	$http.get('/api/municipios?id='+$routeParams.municipioId).success(function(arrayMunicipios) {
+		$scope.municipio = arrayMunicipios[0];
+	});
+ });
