@@ -101,7 +101,7 @@ describe('Validação de parâmetros:', function() {
                 //console.log(JSON.parse(res.body));
                 if(res.body[0].nome == 'RIO BRANCO' &&
                 		res.body[0].cod == '0139' &&
-                		res.body[0].uf == 'AC' &&
+                		res.body[0].uf == 'AC')
                 		//res.body[0]._id == '5353fd784d2bc7ed64289af7' &&
                 		//res.body[0].__v == 0)
                 	console.log('Conteúdo testado com sucesso');

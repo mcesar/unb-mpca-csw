@@ -57,6 +57,7 @@ Para fazer um _deploy_ no _heroku_, execute
 ```
 grunt build
 cd dist
-git commit -a -m "deploy"
+git add -A .
+git commit -m "deploy"
 git push heroku master
 ```
