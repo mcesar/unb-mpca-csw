@@ -4,7 +4,8 @@ angular.module('unbMpcaCswApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute'
+  'ngRoute',
+  'angularCharts'
 ])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider

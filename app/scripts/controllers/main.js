@@ -44,3 +44,40 @@ unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $s
 		$scope.municipio = arrayMunicipios[0];
 	});
  });
+ 
+  unbControllers.controller('graficoCtrl', function($scope, $http, $routeParams) {
+	
+	$scope.data = {
+		series: ['Saúde', 'Educação'],
+		data : [{
+			x : "2010",
+			y: [100,500],
+			tooltip:"this is tooltip"
+		},
+		{
+			x : "2011",
+			y: [300, 100]
+		}, 
+		{
+			x : "2012",
+			y: [300, 100]
+		},
+		{
+			x : "2013",
+			y: [300, 100]
+		}]     
+	}
+
+	$scope.chartType = 'bar';
+
+	$scope.config = {
+		labels: false,
+		title : "Gráfico",
+		legend : {
+			display:true,
+			position:'left'
+		}
+	}
+
+});
+
