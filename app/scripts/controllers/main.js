@@ -15,7 +15,14 @@ unbControllers.controller('FormCtrl', function ($scope, $location, $rootScope) {
 		$location.path("consultaMunicipiosResultado");
 	}
     };
-    $scope.accentsTidy = function(s){
+
+    $scope.linkRanking = function(opt) {
+		$rootScope.rankingSelected = opt;
+		$location.path("consultaRanking");
+		//alert($location.path());
+    };
+
+    $scope.accentsTidy = function(s) {
             var r=s.toLowerCase();
             r = r.replace(new RegExp(/[àáâãäå]/g),"a");
             r = r.replace(new RegExp(/æ/g),"ae");
@@ -45,6 +52,11 @@ unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $s
 	});
  });
  
+ unbControllers.controller('consultaRankingCtrl', function ($scope, $http, $rootScope, $routeParams) {
+	$scope.rankingString = $rootScope.rankingSelected;
+ });
+
+
   unbControllers.controller('graficoCtrl', function($scope, $http, $routeParams) {
 	
 	$scope.data = {
