@@ -17,8 +17,21 @@ unbControllers.controller('FormCtrl', function ($scope, $location, $rootScope) {
     };
 
     $scope.linkRanking = function(opt) {
+		var location = "consultaRanking";
 		$rootScope.rankingSelected = opt;
-		$location.path("consultaRanking");
+//		$rootScope.rankingSelected = {ranking: opt, uf: undefined, ordem: undefined};
+		if(opt === "rkInvUF" || opt === "rkIDHUf"){
+			if($scope.selectUF === undefined || $scope.ordemUF === undefined){
+				alert("Selecione a ordem e o Estado");
+			}else{
+//				$rootScope.rankingSelected.uf = $scope.selectUF;
+//				$rootScope.rankingSelected.ordem = $scope.ordemUF;
+				location = location + "/" + $scope.selectUF + "/" + $scope.ordemUF;
+				$location.path(location);
+			}
+		}else{
+			$location.path(location);
+		}		
     };
 
     $scope.accentsTidy = function(s) {
