@@ -11,10 +11,24 @@ unbControllers.controller('FormCtrl', function ($scope, $location, $rootScope) {
 		$scope.alerta = "Campo Obrigatório";
 	}else{
 		$scope.alerta = "";
-		$rootScope.paramMunicipio = $scope.buscaMunicipio;
+		$rootScope.paramMunicipio = $scope.accentsTidy($scope.buscaMunicipio);
 		$location.path("consultaMunicipiosResultado");
 	}
     };
+    $scope.accentsTidy = function(s){
+            var r=s.toLowerCase();
+            r = r.replace(new RegExp(/[àáâãäå]/g),"a");
+            r = r.replace(new RegExp(/æ/g),"ae");
+            r = r.replace(new RegExp(/ç/g),"c");
+            r = r.replace(new RegExp(/[èéêë]/g),"e");
+            r = r.replace(new RegExp(/[ìíîï]/g),"i");
+            r = r.replace(new RegExp(/ñ/g),"n");                
+            r = r.replace(new RegExp(/[òóôõö]/g),"o");
+            r = r.replace(new RegExp(/œ/g),"oe");
+            r = r.replace(new RegExp(/[ùúûü]/g),"u");
+            r = r.replace(new RegExp(/[ýÿ]/g),"y");
+            return r;
+        };
  });
 
 unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $scope, $rootScope) {
@@ -30,3 +44,40 @@ unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $s
 		$scope.municipio = arrayMunicipios[0];
 	});
  });
+ 
+  unbControllers.controller('graficoCtrl', function($scope, $http, $routeParams) {
+	
+	$scope.data = {
+		series: ['Saúde', 'Educação'],
+		data : [{
+			x : "2010",
+			y: [100,500],
+			tooltip:"this is tooltip"
+		},
+		{
+			x : "2011",
+			y: [300, 100]
+		}, 
+		{
+			x : "2012",
+			y: [300, 100]
+		},
+		{
+			x : "2013",
+			y: [300, 100]
+		}]     
+	}
+
+	$scope.chartType = 'bar';
+
+	$scope.config = {
+		labels: false,
+		title : "Gráfico",
+		legend : {
+			display:true,
+			position:'left'
+		}
+	}
+
+});
+
