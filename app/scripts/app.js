@@ -31,3 +31,4 @@ angular.module('unbMpcaCswApp', [
       
     $locationProvider.html5Mode(true);
   });
+

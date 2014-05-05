@@ -19,7 +19,6 @@ unbControllers.controller('FormCtrl', function ($scope, $location, $rootScope) {
     $scope.linkRanking = function(opt) {
 		$rootScope.rankingSelected = opt;
 		$location.path("consultaRanking");
-		//alert($location.path());
     };
 
     $scope.accentsTidy = function(s) {
@@ -92,4 +91,5 @@ unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $s
 	}
 
 });
+
 
