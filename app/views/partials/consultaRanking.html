@@ -1,0 +1,29 @@
+<h2>Ranking {{rankingString}}</h2>
+
+<table width="130%" class="table table-hover">
+	<thead>
+		<tr><th>Posição</th>
+			<th width="50px">UF</th>
+			<th>Munic&iacute;pio</th>
+			<th>IDH</th>
+			<th>Saúde 2010</th><th>Saúde 2011</th><th>Saúde 2012</th><th>Saúde 2013</th>
+			<th>Educação 2010</th><th>Educação 2011</th><th>Educação 2012</th><th>Educação 2013</th></tr>
+	</thead>	
+	<tbody>
+		<tr ng-repeat="municipio in listaMunicipios">	
+			<td><center>{{listaMunicipios.indexOf(municipio) + 1}}</center></td>
+			<td>{{municipio.uf}}</td>
+			<td><a href="/municipio/{{municipio._id}}">{{municipio.nome}}</a></td>
+			<td>{{municipio.idh}}</td>
+			<td>{{municipio.investimento.saude.2010}}</td><td>{{municipio.investimento.saude.2011}}</td>
+			<td>{{municipio.investimento.saude.2012}}</td><td>{{municipio.investimento.saude.2013}}</td>
+			<td>{{municipio.investimento.educacao.2010}}</td><td>{{municipio.investimento.educacao.2011}}</td>
+			<td>{{municipio.investimento.educacao.2012}}</td><td>{{municipio.investimento.educacao.2013}}</td>
+		</tr>
+	</tbody>
+</table>
+<center><div id="loadingImg" style="{{estiloImg}}" >
+	<img src="images/carregando.gif" alt="Carregando.."/>
+</div></center>
+<p><a href="/" class="btn btn-default" role="button">
+<span class="glyphicon glyphicon-arrow-left"></span> Voltar à página inicial</a></p>

@@ -17,13 +17,49 @@
 	<p/>
 	<div role="boxselect" class="list-group">
 	  <label><h3>Rankings</h3></label>
-	  <label class="list-group-item active">Por Investimentos</label>
-	  <a href="#" class="list-group-item">Geral</a>
-	  <a href="#" class="list-group-item">Por UF</a>
-	  <label class="list-group-item active">Por IDH</label>
-	  <a href="#" class="list-group-item">Geral</a>
-	  <a href="#" class="list-group-item">Por UF</a>
+	  <br/><label>Selecione a ordem:</label>
+	  <input ng-model="ordem" type="radio" name="ordem" value="desc" checked>Decrescente
+	  <input ng-model="ordem" type="radio" name="ordem" value="asc">Crescente
+	  <label class="list-group-item active">Geral</label>
+	  <a href="" class="list-group-item" ng-click="linkRanking('rkInvGeral')">Investimento</a>
+	  <a href="" class="list-group-item" ng-click="linkRanking('rkIDHGeral')">IDH</a>
+	</div>
+	<label>Selecione a UF:</label>
+  	  <select ng-model="selectUF" name="selectUF">
+		<option value="AC">Acre</option>
+		<option value="AL">Alagoas</option>
+		<option value="AM">Amazonas</option>
+		<option value="AP">Amapá</option>
+		<option value="BA">Bahia</option>
+		<option value="CE">Ceará</option>
+		<option value="DF">Distrito Federal</option>
+		<option value="ES">Espirito Santo</option>
+		<option value="GO">Goiás</option>
+		<option value="MA">Maranhão</option>
+		<option value="MG">Minas Gerais</option>
+		<option value="MS">Mato Grosso do Sul</option>
+		<option value="MT">Mato Grosso</option>
+		<option value="PA">Pará</option>
+		<option value="PB">Paraíba</option>
+		<option value="PE">Pernambuco</option>
+		<option value="PI">Piauí</option>
+		<option value="PR">Paraná</option>
+		<option value="RJ">Rio de Janeiro</option>
+		<option value="RN">Rio Grande do Norte</option>
+		<option value="RO">Rondônia</option>
+		<option value="RR">Roraima</option>
+		<option value="RS">Rio Grande do Sul</option>
+		<option value="SC">Santa Catarina</option>
+		<option value="SE">Sergipe</option>
+		<option value="SP">São Paulo</option>
+		<option value="TO">Tocantins</option>
+	  </select>
+	<div role="boxselect" class="list-group">
+	  <label class="list-group-item active">Por UF</label>
+	  <a href="" class="list-group-item" ng-click="linkRanking('rkInvUF')">Investimento</a>
+	  <a href="" class="list-group-item" ng-click="linkRanking('rkIDHUF')">IDH</a>
 	</div>
 
 </div>
+
 

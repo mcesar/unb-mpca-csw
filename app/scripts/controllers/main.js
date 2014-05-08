@@ -15,7 +15,37 @@ unbControllers.controller('FormCtrl', function ($scope, $location, $rootScope) {
 		$location.path("consultaMunicipiosResultado");
 	}
     };
-    $scope.accentsTidy = function(s){
+
+    $scope.linkRanking = function(opt) {		
+		if($scope.ordem === undefined){
+			alert("Selecione a ordem");
+		}
+		else {
+			var location = "";
+			if(opt == "rkInvUF" || opt == "rkInvGeral"){
+				location = "/consultaRanking/investimento";
+			}
+			else if(opt == "rkIDHUF" || opt == "rkIDHGeral"){
+				location = "/consultaRanking/IDH";
+			}
+			location = location + "/" + $scope.ordem;
+		
+			if(opt === "rkInvUF" || opt === "rkIDHUF"){
+				if($scope.selectUF === undefined){
+					alert("Selecione a UF");
+				}
+				else{
+					location = location + "/" + $scope.selectUF;
+					$location.path(location);
+				}
+			}
+			else {
+				$location.path(location);			
+			}
+		}	
+    };
+
+    $scope.accentsTidy = function(s) {
             var r=s.toLowerCase();
             r = r.replace(new RegExp(/[àáâãäå]/g),"a");
             r = r.replace(new RegExp(/æ/g),"ae");
@@ -34,6 +64,7 @@ unbControllers.controller('FormCtrl', function ($scope, $location, $rootScope) {
 unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $scope, $rootScope) {
 	$http.get("http://"+window.location.host+'/api/municipios?nome='+$rootScope.paramMunicipio).success(function(data, status, header, config) {
 		$scope.listaMunicipios = data;
+		$scope.estiloImg = 'display:none';
 	}).error(function(data, status, header, config) {
 	   	$scope.alerta = "Erro ao buscar municipio: "+status;
 	});
@@ -45,6 +76,25 @@ unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $s
 	});
  });
  
+ unbControllers.controller('consultaRankingCtrl', function ($scope, $http, $rootScope, $routeParams, $location) {
+	var ufString = "";
+	var ufURI = ""
+	if($routeParams.uf != undefined){
+		ufString = " (Por UF)";
+		ufURI = "&uf=" + $routeParams.uf;
+	}
+	if($routeParams.tipo != 'IDH' && $routeParams.tipo != 'investimento'){
+		$location.path("/");
+	}
+	$scope.rankingString = 'de ' + $routeParams.tipo + ufString;
+	
+	$http.get('/api/municipios/ranking/' + $routeParams.tipo + '?ordem=' + $routeParams.ordem + ufURI).success(function(arrayMunicipios) {
+		$scope.listaMunicipios = arrayMunicipios;
+		$scope.estiloImg = 'display:none';
+	});	
+ });
+
+
   unbControllers.controller('graficoCtrl', function($scope, $http, $routeParams) {
 	
 	$scope.data = {
@@ -80,4 +130,5 @@ unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $s
 	}
 
 });
+
 
