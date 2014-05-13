@@ -61,13 +61,19 @@ unbControllers.controller('FormCtrl', function ($scope, $location, $rootScope) {
         };
  });
 
-unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $scope, $rootScope) {
+unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $scope, $rootScope, $filter) {
+
 	$http.get("http://"+window.location.host+'/api/municipios?nome='+$rootScope.paramMunicipio).success(function(data, status, header, config) {
 		$scope.listaMunicipios = data;
 		$scope.estiloImg = 'display:none';
 	}).error(function(data, status, header, config) {
 	   	$scope.alerta = "Erro ao buscar municipio: "+status;
 	});
+
+	$scope.selecionarMunicipio = function () {
+    		$scope.selecaoMun = $filter('filter')($scope.listaMunicipios, {checked: true});
+	}
+
  });
 
  unbControllers.controller('detalhaMunicipioCtrl', function ($scope, $http, $routeParams) {

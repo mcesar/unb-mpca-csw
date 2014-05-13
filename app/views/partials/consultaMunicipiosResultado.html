@@ -1,12 +1,14 @@
 <h2>Resultado de Busca por Munic&iacute;pios</h2>
 <table width="100%" class="table table-hover">
 	<thead>
-		<tr><th width="50px">UF</th><th>Munic&iacute;pio</th></tr>
+		<tr><th width="50px">UF</th><th>Munic&iacute;pio</th><th>Comparar</th></tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="municipio in listaMunicipios">
+		<tr ng-repeat="municipio in listaMunicipios" ng-init="innerIndex = $index">
 			<td><span>{{municipio.uf}}</span></td>
 			<td><a href="/municipio/{{municipio._id}}">{{municipio.nome}}</a></td>
+			<td><input type="checkbox" name="{{municipio.nome}}" id="{{municipio._id}}" ng-model="municipio.checked" ng-change="selecionarMunicipio()"></td>
+
 		</tr>
 	</tbody>
 </table>
