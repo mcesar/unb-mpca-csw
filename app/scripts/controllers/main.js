@@ -66,6 +66,94 @@ unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $s
 	$http.get("http://"+window.location.host+'/api/municipios?nome='+$rootScope.paramMunicipio).success(function(data, status, header, config) {
 		$scope.listaMunicipios = data;
 		$scope.estiloImg = 'display:none';
+		
+	//Usar este objeto se quiser levar os dados pra outra tela: 	
+	$scope.selection = {
+        ids: {},
+        objects: []
+    };
+	
+	
+	$scope.$watch(function() {
+	    return $scope.selection.ids;
+    }, function(value) {     
+		$scope.selection.objects = [];
+	
+		$scope.nomes = [];
+		$scope.dados2010 = [];
+		$scope.dados2011 = [];
+		$scope.dados2012 = [];
+		$scope.dados2013 = [];
+		
+		
+        angular.forEach($scope.selection.ids, function(v, k) {
+            $scope.selection.objects.push(getCategoryById(k)); 
+			//Tirar comentários depois(quando tiver dados no banco)
+			v && $scope.nomes.push(getCategoryById(k).nome + " IDH -" + getCategoryById(k).idh);
+			v && $scope.dados2010.push(10);
+			//v && $scope.dados2010.push(getCategoryById(k).investimento["educacao"]["2010"] + getCategoryById(k).investimento["saude"]["2010"]);
+			v && $scope.dados2011.push(50);
+			//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2011"] + getCategoryById(k).investimento["saude"]["2011"]);
+			v && $scope.dados2012.push(150);
+			//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2012"] + getCategoryById(k).investimento["saude"]["2012"]);
+			v && $scope.dados2013.push(50)
+			//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2013"] + getCategoryById(k).investimento["saude"]["2013"]);
+
+			criarGrafico();
+        });        
+    }, true);
+	
+		
+	function criarGrafico(){
+		$scope.data = {
+			series: $scope.nomes,
+			data : [{
+				x : "2010",
+				y: $scope.dados2010
+			},
+			{
+				x : "2011",
+				y: $scope.dados2011
+			},
+			{
+				x : "2012",
+				y: $scope.dados2012
+			},
+			{
+				x : "2013",
+				y: $scope.dados2013
+			}
+			]     
+		}
+		
+		$scope.chartType = 'bar';
+
+		$scope.config = {
+			labels: false,
+			title : "Investimentos (Educação + Saúde)",
+			legend : {
+				display:true,
+				position:'right'
+			},
+			"innerRadius": "0",
+			"lineLegend": "traditional"
+		}
+		
+	}
+	
+
+	function getCategoryById (id) {
+        
+		for (var i = 0; i < $scope.listaMunicipios.length; i++) {
+			
+            if ($scope.listaMunicipios[i]._id == id) {
+				//$scope.sometext = scope.selection[i]._id;
+				return $scope.listaMunicipios[i];
+				
+            }
+        }
+    };
+		
 	}).error(function(data, status, header, config) {
 	   	$scope.alerta = "Erro ao buscar municipio: "+status;
 	});
@@ -79,6 +167,43 @@ unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $s
  unbControllers.controller('detalhaMunicipioCtrl', function ($scope, $http, $routeParams) {
 	$http.get('/api/municipios?id='+$routeParams.municipioId).success(function(arrayMunicipios) {
 		$scope.municipio = arrayMunicipios[0];
+		
+		$scope.data = {
+		series: ['Saúde', 'Educação'],
+		data : [{
+			x : "2010",
+			//y: [$scope.municipio.investimento["saude"]["2010"], $scope.municipio.investimento["educacao"]["2010"]]
+			y: [80, 30]
+		},
+		{
+			x : "2011",
+			y: [50, 50]
+			//y: [$scope.municipio.investimento["saude"]["2011"], $scope.municipio.investimento["educacao"]["2011"]]
+		}, 
+		{
+			x : "2012",
+			y: [15, 20]
+			//y: [$scope.municipio.investimento["saude"]["2012"], $scope.municipio.investimento["educacao"]["2012"]]
+		},
+		{
+			x : "2013",
+			y: [56, 80]
+			//y: [$scope.municipio.investimento["saude"]["2013"], $scope.municipio.investimento["educacao"]["2013"]]
+		}]     
+	}
+
+	$scope.chartType = 'bar';
+
+	$scope.config = {
+		labels: false,
+		title : "Gráfico",
+		legend : {
+			display:true,
+			position:'left'
+		}
+	}
+	
+		
 	});
  });
  
@@ -101,40 +226,9 @@ unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $s
  });
 
 
-  unbControllers.controller('graficoCtrl', function($scope, $http, $routeParams) {
-	
-	$scope.data = {
-		series: ['Saúde', 'Educação'],
-		data : [{
-			x : "2010",
-			y: [100,500],
-			tooltip:"this is tooltip"
-		},
-		{
-			x : "2011",
-			y: [300, 100]
-		}, 
-		{
-			x : "2012",
-			y: [300, 100]
-		},
-		{
-			x : "2013",
-			y: [300, 100]
-		}]     
-	}
 
-	$scope.chartType = 'bar';
 
-	$scope.config = {
-		labels: false,
-		title : "Gráfico",
-		legend : {
-			display:true,
-			position:'left'
-		}
-	}
 
-});
+
 
 
