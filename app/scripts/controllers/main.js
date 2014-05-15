@@ -12,21 +12,23 @@ unbControllers.controller('FormCtrl', function ($scope, $location, $rootScope, $
 		var removidos = [];
 		var localizado = 0;
 		if($rootScope.listaSelecionados === undefined || ($rootScope.listaSelecionados).length === 0){
-	    		$rootScope.listaSelecionados = $filter('filter')(lista, {checked: true});
+			$rootScope.listaSelecionados = [];
+			selecionados = $filter('filter')(lista, {checked: true});
+			for(var i = 0; i < selecionados.length; i++){
+				$rootScope.listaSelecionados.push(selecionados[i]._id);
+			};			
+	    		
 		}else{
 			selecionados = $filter('filter')(lista, {checked: true});
 			removidos = $filter('filter')(lista, {checked: false});
-			alert(selecionados.length);
 			for(var i = 0; i < selecionados.length; i++){
 				for(var j = 0; j < ($rootScope.listaSelecionados).length; j++) {
-					if(selecionados[i]._id === $rootScope.listaSelecionados[j]._id){
-						alert(selecionados[i].nome + ":" + $rootScope.listaSelecionados[j].nome);
+					if(selecionados[i]._id === $rootScope.listaSelecionados[j]){
 						localizado = 1;
 					};  					
 				};
 				if(localizado === 0){
-					alert(selecionados[i].nome);
-					$rootScope.listaSelecionados.push(selecionados[i]);					
+					$rootScope.listaSelecionados.push(selecionados[i]._id);
 				}else{
 					localizado = 0;
 				};
@@ -34,14 +36,13 @@ unbControllers.controller('FormCtrl', function ($scope, $location, $rootScope, $
 
 			for(var i = 0; i < removidos.length; i++){
 				for(var j = 0; j < ($rootScope.listaSelecionados).length; j++) {
-					if(removidos[i]._id === $rootScope.listaSelecionados[j]._id){
+					if(removidos[i]._id === $rootScope.listaSelecionados[j]){
 						$rootScope.listaSelecionados.splice(j,1);
 					};  					
 				};
 			};
 
 		};
-		alert(($rootScope.listaSelecionados).length);
     };
 
     $scope.enviar = function () {
@@ -167,10 +168,10 @@ unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $s
  
 unbControllers.controller('compararCtrl', function ($http, $scope, $rootScope, $filter) {	
 	var tamanho = ($rootScope.listaSelecionados).length;
-	var stringIds = ("?id=").concat($rootScope.listaSelecionados[0]._id);
+	var stringIds = ("?id=").concat($rootScope.listaSelecionados[0]);
 	for(var i=1; i < tamanho; i++){
 		stringIds = stringIds.concat("&id=");
-		stringIds = stringIds.concat($rootScope.listaSelecionados[i]._id);			
+		stringIds = stringIds.concat($rootScope.listaSelecionados[i]);			
 	}
 		
 	$http.get("http://"+window.location.host+'/api/municipios/comparativo'+stringIds).success(function(data, status, header, config) {
