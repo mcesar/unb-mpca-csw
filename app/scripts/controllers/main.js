@@ -132,20 +132,21 @@ unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $s
  
  
 unbControllers.controller('compararCtrl', function ($http, $scope, $rootScope, $filter) {	
-	// TODO:
-	// FALTA generalizar esse código de concat
+	var tamanho = ($rootScope.listaSelecionados).length;
 	var stringIds = ("?id=").concat($rootScope.listaSelecionados[0]);
-	stringIds = stringIds.concat("&id=");
-	stringIds = stringIds.concat($rootScope.listaSelecionados[1]);	
-	
+	for(var i=1; i < tamanho; i++){
+		stringIds = stringIds.concat("&id=");
+		stringIds = stringIds.concat($rootScope.listaSelecionados[i]);			
+	}
+		
 	$http.get("http://"+window.location.host+'/api/municipios/comparativo'+stringIds).success(function(data, status, header, config) {
 		$scope.listaSelecionados = data;
-		$scope.estiloImg = 'display:none';		
-		
+		$scope.estiloImg = 'display:none';
+			
 		// TODO:
 		// FALTA passar dados da listaSelecionados para o $scope.selection
 
-		
+			
 		//Usar este objeto se quiser levar os dados pra outra tela: 	
 		$scope.selection = {
 			ids: {},
@@ -176,7 +177,6 @@ unbControllers.controller('compararCtrl', function ($http, $scope, $rootScope, $
 				//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2012"] + getCategoryById(k).investimento["saude"]["2012"]);
 				v && $scope.dados2013.push(50)
 				//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2013"] + getCategoryById(k).investimento["saude"]["2013"]);
-
 				criarGrafico();
 			});        
 		}, true);
@@ -205,7 +205,6 @@ unbControllers.controller('compararCtrl', function ($http, $scope, $rootScope, $
 			}
 			
 			$scope.chartType = 'bar';
-
 			$scope.config = {
 				labels: false,
 				title : "Investimentos (Educação + Saúde)",
@@ -217,7 +216,7 @@ unbControllers.controller('compararCtrl', function ($http, $scope, $rootScope, $
 				"lineLegend": "traditional"
 			}		
 		}
-
+			
 		function getCategoryById(id) {        
 			for (var i = 0; i < $scope.listaSelecionados.length; i++) {			
 				if ($scope.listaSelecionados[i]._id == id) {
@@ -228,9 +227,8 @@ unbControllers.controller('compararCtrl', function ($http, $scope, $rootScope, $
 		};
 		
 	}).error(function(data, status, header, config) {
-	   	$scope.alerta = "Erro ao buscar municipios selecionados: "+status;
+		$scope.alerta = "Erro ao buscar municipios selecionados: "+status;
 	});
-
  });
  
  unbControllers.controller('consultaRankingCtrl', function ($scope, $http, $rootScope, $routeParams, $location) {
