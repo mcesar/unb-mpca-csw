@@ -3,9 +3,47 @@
 var unbControllers = angular.module('unbMpcaCswApp');
 
 unbControllers.controller('MainCtrl', function ($scope, $http) {
+
 });
 
-unbControllers.controller('FormCtrl', function ($scope, $location, $rootScope) {
+unbControllers.controller('FormCtrl', function ($scope, $location, $rootScope, $filter) {
+    $rootScope.selecionarMunicipio = function (lista) {
+		var selecionados = [];
+		var removidos = [];
+		var localizado = 0;
+		if($rootScope.listaSelecionados === undefined || ($rootScope.listaSelecionados).length === 0){
+	    		$rootScope.listaSelecionados = $filter('filter')(lista, {checked: true});
+		}else{
+			selecionados = $filter('filter')(lista, {checked: true});
+			removidos = $filter('filter')(lista, {checked: false});
+			alert(selecionados.length);
+			for(var i = 0; i < selecionados.length; i++){
+				for(var j = 0; j < ($rootScope.listaSelecionados).length; j++) {
+					if(selecionados[i]._id === $rootScope.listaSelecionados[j]._id){
+						alert(selecionados[i].nome + ":" + $rootScope.listaSelecionados[j].nome);
+						localizado = 1;
+					};  					
+				};
+				if(localizado === 0){
+					alert(selecionados[i].nome);
+					$rootScope.listaSelecionados.push(selecionados[i]);					
+				}else{
+					localizado = 0;
+				};
+			};
+
+			for(var i = 0; i < removidos.length; i++){
+				for(var j = 0; j < ($rootScope.listaSelecionados).length; j++) {
+					if(removidos[i]._id === $rootScope.listaSelecionados[j]._id){
+						$rootScope.listaSelecionados.splice(j,1);
+					};  					
+				};
+			};
+
+		};
+		alert(($rootScope.listaSelecionados).length);
+    };
+
     $scope.enviar = function () {
 	if($scope.buscaMunicipio === undefined || $scope.buscaMunicipio.trim() === ""){
 		$scope.alerta = "Campo Obrigatório";
@@ -81,10 +119,6 @@ unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $s
 	   	$scope.alerta = "Erro ao buscar municipio: "+status;
 	});
 
-	$scope.selecionarMunicipio = function () {
-    		$scope.selecaoMun = $filter('filter')($scope.listaMunicipios, {checked: true});
-	};
-
  });
 
  unbControllers.controller('detalhaMunicipioCtrl', function ($scope, $http, $routeParams) {
@@ -133,10 +167,10 @@ unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $s
  
 unbControllers.controller('compararCtrl', function ($http, $scope, $rootScope, $filter) {	
 	var tamanho = ($rootScope.listaSelecionados).length;
-	var stringIds = ("?id=").concat($rootScope.listaSelecionados[0]);
+	var stringIds = ("?id=").concat($rootScope.listaSelecionados[0]._id);
 	for(var i=1; i < tamanho; i++){
 		stringIds = stringIds.concat("&id=");
-		stringIds = stringIds.concat($rootScope.listaSelecionados[i]);			
+		stringIds = stringIds.concat($rootScope.listaSelecionados[i]._id);			
 	}
 		
 	$http.get("http://"+window.location.host+'/api/municipios/comparativo'+stringIds).success(function(data, status, header, config) {
