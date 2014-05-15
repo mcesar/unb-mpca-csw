@@ -15,8 +15,18 @@ unbControllers.controller('FormCtrl', function ($scope, $location, $rootScope) {
 		$location.path("consultaMunicipiosResultado");
 	}
     };
-
-    $scope.linkRanking = function(opt) {		
+	
+    $scope.testeAddRootScope = function() {		
+		var id1 = "535c7ce16c3e064c15ccf4e9";
+		var id2 = "535c7ce16c3e064c15ccf4ea";
+		var listaSelecionados = new Array();
+		listaSelecionados.push(id1);
+		listaSelecionados.push(id2);
+		
+		$rootScope.listaSelecionados = listaSelecionados;	
+	};
+	
+    $scope.linkRanking = function(opt) {
 		if($scope.ordem === undefined){
 			alert("Selecione a ordem");
 		}
@@ -67,100 +77,13 @@ unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $s
 		$scope.listaMunicipios = data;
 		$scope.estiloImg = 'display:none';
 		
-	//Usar este objeto se quiser levar os dados pra outra tela: 	
-	$scope.selection = {
-        ids: {},
-        objects: []
-    };
-	
-	
-	$scope.$watch(function() {
-	    return $scope.selection.ids;
-    }, function(value) {     
-		$scope.selection.objects = [];
-	
-		$scope.nomes = [];
-		$scope.dados2010 = [];
-		$scope.dados2011 = [];
-		$scope.dados2012 = [];
-		$scope.dados2013 = [];
-		
-		
-        angular.forEach($scope.selection.ids, function(v, k) {
-            $scope.selection.objects.push(getCategoryById(k)); 
-			//Tirar comentários depois(quando tiver dados no banco)
-			v && $scope.nomes.push(getCategoryById(k).nome + " IDH -" + getCategoryById(k).idh);
-			v && $scope.dados2010.push(10);
-			//v && $scope.dados2010.push(getCategoryById(k).investimento["educacao"]["2010"] + getCategoryById(k).investimento["saude"]["2010"]);
-			v && $scope.dados2011.push(50);
-			//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2011"] + getCategoryById(k).investimento["saude"]["2011"]);
-			v && $scope.dados2012.push(150);
-			//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2012"] + getCategoryById(k).investimento["saude"]["2012"]);
-			v && $scope.dados2013.push(50)
-			//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2013"] + getCategoryById(k).investimento["saude"]["2013"]);
-
-			criarGrafico();
-        });        
-    }, true);
-	
-		
-	function criarGrafico(){
-		$scope.data = {
-			series: $scope.nomes,
-			data : [{
-				x : "2010",
-				y: $scope.dados2010
-			},
-			{
-				x : "2011",
-				y: $scope.dados2011
-			},
-			{
-				x : "2012",
-				y: $scope.dados2012
-			},
-			{
-				x : "2013",
-				y: $scope.dados2013
-			}
-			]     
-		}
-		
-		$scope.chartType = 'bar';
-
-		$scope.config = {
-			labels: false,
-			title : "Investimentos (Educação + Saúde)",
-			legend : {
-				display:true,
-				position:'right'
-			},
-			"innerRadius": "0",
-			"lineLegend": "traditional"
-		}
-		
-	}
-	
-
-	function getCategoryById (id) {
-        
-		for (var i = 0; i < $scope.listaMunicipios.length; i++) {
-			
-            if ($scope.listaMunicipios[i]._id == id) {
-				//$scope.sometext = scope.selection[i]._id;
-				return $scope.listaMunicipios[i];
-				
-            }
-        }
-    };
-		
 	}).error(function(data, status, header, config) {
 	   	$scope.alerta = "Erro ao buscar municipio: "+status;
 	});
 
 	$scope.selecionarMunicipio = function () {
     		$scope.selecaoMun = $filter('filter')($scope.listaMunicipios, {checked: true});
-	}
+	};
 
  });
 
@@ -205,6 +128,109 @@ unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $s
 	
 		
 	});
+ });
+ 
+ 
+unbControllers.controller('compararCtrl', function ($http, $scope, $rootScope, $filter) {	
+	// TODO:
+	// FALTA generalizar esse código de concat
+	var stringIds = ("?id=").concat($rootScope.listaSelecionados[0]);
+	stringIds = stringIds.concat("&id=");
+	stringIds = stringIds.concat($rootScope.listaSelecionados[1]);	
+	
+	$http.get("http://"+window.location.host+'/api/municipios/comparativo'+stringIds).success(function(data, status, header, config) {
+		$scope.listaSelecionados = data;
+		$scope.estiloImg = 'display:none';		
+		
+		// TODO:
+		// FALTA passar dados da listaSelecionados para o $scope.selection
+
+		
+		//Usar este objeto se quiser levar os dados pra outra tela: 	
+		$scope.selection = {
+			ids: {},
+			objects: []
+		};	
+		
+		$scope.$watch(function() {
+			return $scope.selection.ids;
+		}, function(value) {     
+			$scope.selection.objects = [];
+		
+			$scope.nomes = [];
+			$scope.dados2010 = [];
+			$scope.dados2011 = [];
+			$scope.dados2012 = [];
+			$scope.dados2013 = [];
+			
+			
+			angular.forEach($scope.selection.ids, function(v, k) {
+				$scope.selection.objects.push(getCategoryById(k)); 
+				//Tirar comentários depois(quando tiver dados no banco)
+				v && $scope.nomes.push(getCategoryById(k).nome + " - IDH: " + getCategoryById(k).idh);
+				v && $scope.dados2010.push(10);
+				//v && $scope.dados2010.push(getCategoryById(k).investimento["educacao"]["2010"] + getCategoryById(k).investimento["saude"]["2010"]);
+				v && $scope.dados2011.push(50);
+				//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2011"] + getCategoryById(k).investimento["saude"]["2011"]);
+				v && $scope.dados2012.push(150);
+				//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2012"] + getCategoryById(k).investimento["saude"]["2012"]);
+				v && $scope.dados2013.push(50)
+				//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2013"] + getCategoryById(k).investimento["saude"]["2013"]);
+
+				criarGrafico();
+			});        
+		}, true);
+		
+			
+		function criarGrafico(){
+			$scope.data = {
+				series: $scope.nomes,
+				data : [{
+					x : "2010",
+					y: $scope.dados2010
+				},
+				{
+					x : "2011",
+					y: $scope.dados2011
+				},
+				{
+					x : "2012",
+					y: $scope.dados2012
+				},
+				{
+					x : "2013",
+					y: $scope.dados2013
+				}
+				]     
+			}
+			
+			$scope.chartType = 'bar';
+
+			$scope.config = {
+				labels: false,
+				title : "Investimentos (Educação + Saúde)",
+				legend : {
+					display:true,
+					position:'right'
+				},
+				"innerRadius": "0",
+				"lineLegend": "traditional"
+			}		
+		}
+
+		function getCategoryById(id) {        
+			for (var i = 0; i < $scope.listaSelecionados.length; i++) {			
+				if ($scope.listaSelecionados[i]._id == id) {
+					//$scope.sometext = scope.selection[i]._id;
+					return $scope.listaSelecionados[i];				
+				}
+			}
+		};
+		
+	}).error(function(data, status, header, config) {
+	   	$scope.alerta = "Erro ao buscar municipios selecionados: "+status;
+	});
+
  });
  
  unbControllers.controller('consultaRankingCtrl', function ($scope, $http, $rootScope, $routeParams, $location) {

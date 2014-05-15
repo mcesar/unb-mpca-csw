@@ -29,6 +29,10 @@ angular.module('unbMpcaCswApp', [
         templateUrl: 'partials/consultaRanking',
         controller: 'consultaRankingCtrl'
       })
+	  .when('/comparar', {
+        templateUrl: 'partials/comparar',
+        controller: 'compararCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

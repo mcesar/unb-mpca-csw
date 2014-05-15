@@ -11,36 +11,15 @@
 
 
 <table width="100%" class="table table-hover">
-
-
-	
 	<thead>
-<<<<<<< HEAD
-		<tr><th width="50px">UF</th><th>Munic&iacute;pio</th><th>Comparar</th></tr>
+		<tr><th width="50px">UF</th><th>Munic&iacute;pio</th><th width="50px">Comparar</th></tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="municipio in listaMunicipios" ng-init="innerIndex = $index">
 			<td><span>{{municipio.uf}}</span></td>
 			<td><a href="/municipio/{{municipio._id}}">{{municipio.nome}}</a></td>
 			<td><input type="checkbox" name="{{municipio.nome}}" id="{{municipio._id}}" ng-model="municipio.checked" ng-change="selecionarMunicipio()"></td>
-
-=======
-		<tr><th width="50px"></th> <th width="50px">UF</th><th>Munic&iacute;pio</th></tr>
 	</thead>
-	<tbody>
-		<tr ng-repeat="municipio in listaMunicipios">
-				<td><label class="checkbox" for="{{municipio._id}}">
-				 <input type="checkbox" ng-model="selection.ids[municipio._id]" name="group" id="{{municipio._id}}" />
-				</label></td>
-				
-				<td><span>{{municipio.uf}}</span></td>
-				<td><a href="/municipio/{{municipio._id}}">{{municipio.nome}}</a></td>
-
-				
-				
->>>>>>> 1297026411448487b4af0ac759aa4d25ccaaa2ff
-		</tr>
-	</tbody>
 </table>
 <center><div id="loadingImg" style="{{estiloImg}}" >
 	<img src="images/carregando.gif" alt="Carregando.."/>
