@@ -113,6 +113,18 @@ unbControllers.controller('FormCtrl', function ($scope, $location, $rootScope, $
 unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $scope, $rootScope, $filter) {
 
 	$http.get("http://"+window.location.host+'/api/municipios?nome='+$rootScope.paramMunicipio).success(function(data, status, header, config) {
+		for(var i = 0; i < data.length; i++){
+			data[i].checked = false;
+		}
+		if($rootScope.listaSelecionados != undefined){
+			for(var i = 0; i < (data).length; i++){
+				for(var j =0; j < ($rootScope.listaSelecionados).length; j++){
+					if(data[i]._id === $rootScope.listaSelecionados[j]){
+						data[i].checked = true;
+					}
+				}
+			};
+		};
 		$scope.listaMunicipios = data;
 		$scope.estiloImg = 'display:none';
 		

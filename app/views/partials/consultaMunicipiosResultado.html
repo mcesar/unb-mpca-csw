@@ -11,7 +11,7 @@
 		<tr ng-repeat="municipio in listaMunicipios" ng-init="innerIndex = $index">
 			<td><span>{{municipio.uf}}</span></td>
 			<td><a href="/municipio/{{municipio._id}}">{{municipio.nome}}</a></td>
-			<td><input type="checkbox" name="{{municipio.nome}}" id="{{municipio._id}}" ng-model="municipio.checked" ng-change="selecionarMunicipio(listaMunicipios)"></td>
+			<td><input type="checkbox" name="{{municipio.nome}}" id="{{municipio._id}}" ng-model="municipio.checked" ng-change="selecionarMunicipio(listaMunicipios)" ng-init="checked=municipio.checked"></td>
 	</thead>
 </table>
 <center><div id="loadingImg" style="{{estiloImg}}" >
