@@ -202,32 +202,31 @@ unbControllers.controller('compararCtrl', function ($http, $scope, $rootScope, $
 		
 		$scope.$watch(function() {
 			return $scope.selection.ids;
-		}, function(value) {     
-			$scope.selection.objects = [];
+		}, function (values) {     
+					$scope.selection.objects = [];
 		
-			$scope.nomes = [];
-			$scope.dados2010 = [];
-			$scope.dados2011 = [];
-			$scope.dados2012 = [];
-			$scope.dados2013 = [];
+					$scope.nomes = [];
+					$scope.dados2010 = [];
+					$scope.dados2011 = [];
+					$scope.dados2012 = [];
+					$scope.dados2013 = [];
 			
 			
-			angular.forEach($scope.selection.ids, function(v, k) {
-				$scope.selection.objects.push(getCategoryById(k)); 
-				//Tirar comentários depois(quando tiver dados no banco)
-				v && $scope.nomes.push(getCategoryById(k).nome + " - IDH: " + getCategoryById(k).idh);
-				v && $scope.dados2010.push(10);
-				//v && $scope.dados2010.push(getCategoryById(k).investimento["educacao"]["2010"] + getCategoryById(k).investimento["saude"]["2010"]);
-				v && $scope.dados2011.push(50);
-				//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2011"] + getCategoryById(k).investimento["saude"]["2011"]);
-				v && $scope.dados2012.push(150);
-				//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2012"] + getCategoryById(k).investimento["saude"]["2012"]);
-				v && $scope.dados2013.push(50)
-				//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2013"] + getCategoryById(k).investimento["saude"]["2013"]);
-				criarGrafico();
-			});        
-		}, true);
-		
+					angular.forEach($scope.selection.ids, function(v, k) {
+						$scope.selection.objects.push(getCategoryById(k)); 
+						//Tirar comentários depois(quando tiver dados no banco)
+						v && $scope.nomes.push(getCategoryById(k).nome + " - IDH: " + getCategoryById(k).idh);
+						v && $scope.dados2010.push(10);
+						//v && $scope.dados2010.push(getCategoryById(k).investimento["educacao"]["2010"] + getCategoryById(k).investimento["saude"]["2010"]);
+						v && $scope.dados2011.push(50);
+						//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2011"] + getCategoryById(k).investimento["saude"]["2011"]);
+						v && $scope.dados2012.push(150);
+						//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2012"] + getCategoryById(k).investimento["saude"]["2012"]);
+						v && $scope.dados2013.push(50)
+						//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2013"] + getCategoryById(k).investimento["saude"]["2013"]);
+						criarGrafico();
+					});        
+		}, true);		
 			
 		function criarGrafico(){
 			$scope.data = {
@@ -262,7 +261,7 @@ unbControllers.controller('compararCtrl', function ($http, $scope, $rootScope, $
 				"innerRadius": "0",
 				"lineLegend": "traditional"
 			}		
-		}
+		};
 			
 		function getCategoryById(id) {        
 			for (var i = 0; i < $scope.listaSelecionados.length; i++) {			
@@ -291,6 +290,18 @@ unbControllers.controller('compararCtrl', function ($http, $scope, $rootScope, $
 	$scope.rankingString = 'de ' + $routeParams.tipo + ufString;
 	
 	$http.get('/api/municipios/ranking/' + $routeParams.tipo + '?ordem=' + $routeParams.ordem + ufURI).success(function(arrayMunicipios) {
+		for(var i = 0; i < arrayMunicipios.length; i++){
+			arrayMunicipios[i].checked = false;
+		}
+		if($rootScope.listaSelecionados != undefined){
+			for(var i = 0; i < (arrayMunicipios).length; i++){
+				for(var j =0; j < ($rootScope.listaSelecionados).length; j++){
+					if(arrayMunicipios[i]._id === $rootScope.listaSelecionados[j]){
+						arrayMunicipios[i].checked = true;
+					}
+				}
+			};
+		};
 		$scope.listaMunicipios = arrayMunicipios;
 		$scope.estiloImg = 'display:none';
 	});	

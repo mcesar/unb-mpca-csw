@@ -1,7 +1,7 @@
 <h2>Comparação de Munic&iacute;pios</h2>
 <p><a href="/" class="btn btn-default" role="button">
 <span class="glyphicon glyphicon-arrow-left"></span> Voltar à página inicial</a></p>
- <table width="100%" >
+ <table width="100%">
  	<tr>
  	<td>
  		<div ac-chart="chartType" ac-data="data" ac-config="config" id='chart' class='chart'></div>
@@ -16,14 +16,17 @@
   		<tr ng-repeat="municipio in listaSelecionados">
  			<td><span>{{municipio.uf}}</span></td>
  			<td><a href="/municipio/{{municipio._id}}">{{municipio.nome}}</a></td>
-			<td><center><label class="checkbox" for="{{municipio._id}}">
-				<input type="checkbox" ng-model="selection.ids[municipio._id]" name="group" id="{{municipio._id}}" />
-				</label></center>
+			<td>
+				<center>
+					<label class="checkbox" for="{{municipio._id}}">
+						<input type="checkbox" ng-model="selection.ids[municipio._id]" name="group" id="{{municipio._id}}" />
+					</label>
+				</center>
 			</td>
   		</tr>
   	</tbody>
   </table>
-<center><div id="loadingImg" style="{{estiloImg}}" >
+<center><div id="loadingImg" style="{{estiloImg}}">
 	<img src="images/carregando.gif" alt="Carregando.."/>
 </div></center>
 <p><a href="/" class="btn btn-default" role="button">
