@@ -142,23 +142,20 @@ unbControllers.controller('consultaMunicipiosResultadoCtrl', function ($http, $s
 		series: ['Saúde', 'Educação'],
 		data : [{
 			x : "2010",
-			//y: [$scope.municipio.investimento["saude"]["2010"], $scope.municipio.investimento["educacao"]["2010"]]
-			y: [80, 30]
+			y: [$scope.municipio.investimento["saude"]["2010"], $scope.municipio.investimento["educacao"]["2010"]]
+			
 		},
 		{
 			x : "2011",
-			y: [50, 50]
-			//y: [$scope.municipio.investimento["saude"]["2011"], $scope.municipio.investimento["educacao"]["2011"]]
+			y: [$scope.municipio.investimento["saude"]["2011"], $scope.municipio.investimento["educacao"]["2011"]]
 		}, 
 		{
 			x : "2012",
-			y: [15, 20]
-			//y: [$scope.municipio.investimento["saude"]["2012"], $scope.municipio.investimento["educacao"]["2012"]]
+			y: [$scope.municipio.investimento["saude"]["2012"], $scope.municipio.investimento["educacao"]["2012"]]
 		},
 		{
 			x : "2013",
-			y: [56, 80]
-			//y: [$scope.municipio.investimento["saude"]["2013"], $scope.municipio.investimento["educacao"]["2013"]]
+			y: [$scope.municipio.investimento["saude"]["2013"], $scope.municipio.investimento["educacao"]["2013"]]
 		}]     
 	}
 
@@ -216,14 +213,14 @@ unbControllers.controller('compararCtrl', function ($http, $scope, $rootScope, $
 						$scope.selection.objects.push(getCategoryById(k)); 
 						//Tirar comentários depois(quando tiver dados no banco)
 						v && $scope.nomes.push(getCategoryById(k).nome + " - IDH: " + getCategoryById(k).idh);
-						v && $scope.dados2010.push(10);
-						//v && $scope.dados2010.push(getCategoryById(k).investimento["educacao"]["2010"] + getCategoryById(k).investimento["saude"]["2010"]);
-						v && $scope.dados2011.push(50);
-						//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2011"] + getCategoryById(k).investimento["saude"]["2011"]);
-						v && $scope.dados2012.push(150);
-						//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2012"] + getCategoryById(k).investimento["saude"]["2012"]);
-						v && $scope.dados2013.push(50)
-						//v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2013"] + getCategoryById(k).investimento["saude"]["2013"]);
+						//v && $scope.dados2010.push(10);
+						v && $scope.dados2010.push(getCategoryById(k).investimento["educacao"]["2010"] + getCategoryById(k).investimento["saude"]["2010"]);
+						//v && $scope.dados2011.push(50);
+						v && $scope.dados2011.push(getCategoryById(k).investimento["educacao"]["2011"] + getCategoryById(k).investimento["saude"]["2011"]);
+						//v && $scope.dados2012.push(150);
+						v && $scope.dados2012.push(getCategoryById(k).investimento["educacao"]["2012"] + getCategoryById(k).investimento["saude"]["2012"]);
+						//v && $scope.dados2013.push(50)
+						v && $scope.dados2013.push(getCategoryById(k).investimento["educacao"]["2013"] + getCategoryById(k).investimento["saude"]["2013"]);
 						criarGrafico();
 					});        
 		}, true);		
